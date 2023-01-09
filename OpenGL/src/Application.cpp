@@ -52,8 +52,7 @@ static unsigned int CompileShader( unsigned int type,const std::string& source)
     const char* src = source.c_str();
     glShaderSource(id,1,&src,nullptr);
     glCompileShader(id);
-
-    //wenchao Error handling
+    
     int result;
     glGetShaderiv(id,GL_COMPILE_STATUS,&result);
     if (result == GL_FALSE)
@@ -115,16 +114,19 @@ int main(void)
 
     std::cout<< glGetString(GL_VERSION)<<std::endl;
 
-    float positions[6] =
+    float positions[] =
         {
         -0.5f,-0.5f,
-        0.0f,0.5f,
-        0.5,0.0f,
-        // -0.5f,-0.5f,
-        // 0.0f,-0.5f,
-        // 0.5,0.0f,
+        0.5f,-0.5f,
+        0.5f,0.5f,
+        -0.5f,0.5f,
         };
 
+    unsigned int indices[] = {
+        0,1,2,
+        2,3,0,  
+    };
+    
     unsigned int buffer ;
     glGenBuffers(1,&buffer);
     glBindBuffer(GL_ARRAY_BUFFER, buffer);
@@ -133,11 +135,12 @@ int main(void)
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0,2,GL_FLOAT,GL_FALSE,sizeof(float) *2,0);
 
+    unsigned int ibo ;
+    glGenBuffers(1,&ibo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices),indices,GL_STATIC_DRAW);
+
     ShaderProgramSource source = ParseShader("res/shaders/Basic.shaderfile");
-    // std::cout<<"Vertex"<<std::endl;
-    // std::cout<<source.VertexSource<<std::endl;
-    // std::cout<<"Fragment"<<std::endl;
-    // std::cout<<source.FragmentSource<<std::endl;
     
     unsigned int shader = CreateShader(source.VertexSource,source.FragmentSource);
     glUseProgram(shader);
@@ -148,8 +151,8 @@ int main(void)
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
         
-        glDrawArrays(GL_TRIANGLES, 0,3);
-        //glDrawElements(GL_TRIANGLES,3)
+        //glDrawArrays(GL_TRIANGLES, 0,6);
+        glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_INT,nullptr);
         
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
