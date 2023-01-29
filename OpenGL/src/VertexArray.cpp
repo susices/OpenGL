@@ -13,7 +13,7 @@ VertexArray::~VertexArray()
 
 void VertexArray::AddBuffer(const VertexBuffer& vertexBuffer, const VertexBufferLayout& vertexBufferLayout)
 {
-    
+    Bind();
     vertexBuffer.Bind();
     const auto& elements =  vertexBufferLayout.GetElements();
     unsigned int offset = 0;
