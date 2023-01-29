@@ -52,12 +52,6 @@ unsigned Shader::GetUniformLocation(const std::string& name)
     return location;
 }
 
-bool Shader::CompileShader()
-{
-    return true;
-}
-
-
 
 ShaderProgramSource Shader::ParseShader()
 {
