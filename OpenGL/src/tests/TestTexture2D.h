@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "Test.h"
+#include "../Texture.h"
 #include "glm/glm.hpp"
 #include "../VertexBuffer.h"
 #include "../VertexBufferLayout.h"
@@ -20,9 +21,15 @@ namespace test
         glm::vec3 m_TranslationA;
         glm::vec3 m_TranslationB;
 
-        VertexArray m_VertexArray;
-        IndexBuffer m_IndexBuffer;
-        Shader m_Shader;
+        std::unique_ptr<VertexArray>  m_VertexArray;
+        std::unique_ptr<IndexBuffer> m_IndexBuffer;
+        std::unique_ptr<Shader> m_Shader;
+        std::unique_ptr<Texture> m_Texture;
+        std::unique_ptr<VertexBuffer> m_VertexBuffer;
+        std::unique_ptr<VertexBufferLayout> m_VertexBufferLayout;
+
+        glm::mat4 m_ProjMatrix;
+        glm::mat4 m_ViewMatrix;
 
         
     };

@@ -11,6 +11,7 @@
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
 #include "tests/TestCleatColor.h"
+#include "tests/TestTexture2D.h"
 
 int main(void)
 {
@@ -61,7 +62,8 @@ int main(void)
         auto test_menu = new test::TestMenu(currentTest);
         currentTest = test_menu;
 
-        test_menu->RegisterTest<test::TestCleatColor>("Test Color");
+        test_menu->RegisterTest<test::TestCleatColor>("CLear Color");
+        test_menu->RegisterTest<test::TestTexture2D>("Texture2D");
 
         /* Loop until the user closes the window */
         while (!glfwWindowShouldClose(window))
